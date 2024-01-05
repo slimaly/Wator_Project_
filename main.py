@@ -39,9 +39,12 @@ class Fish(SeaAnimal):
             self.x, self.y = new_x, new_y
 
         
-        grid[self.x][self.y] = 1
+            grid[self.x][self.y] = 1
 
         print(self.x,self.y)
+    
+    def reproduce(self):
+        pass
 
 class Shark(SeaAnimal):
 
@@ -69,7 +72,7 @@ class Shark(SeaAnimal):
             new_x += 1
 
         # limite horizontale et verticale de ma grille pour mes nouvelles coordonnées et vérifie si case poisson adjacente
-        if 0 <= new_x < len(grid) and 0 <= new_y <= len(grid[0]) and grid[new_x][new_y] == 'fish':
+        if 0 <= new_x < len(grid) and 0 <= new_y <= len(grid[0]) and grid[new_x][new_y] == 1 :
         
             # for i in range(len(fish_list)):
             #     if fish_list[i] == new_x and fish_list[i] == new_y:
@@ -77,7 +80,7 @@ class Shark(SeaAnimal):
             #     break
            
             #position initiale:
-            grid[self.x][self.y] = 0
+            #grid[self.x][self.y] = 0
             #nouvelle position + "fish" devient "shark"
             grid[new_x][new_y] = 2 
             #MAJ coordonées
@@ -89,9 +92,16 @@ class Shark(SeaAnimal):
             grid[self.x][self.y] = 0
             grid[new_x][new_y] = 2
 
-        print(self.x, self.y)
+            print(self.x, self.y)
 
+    def reproduce(self):
+        pass
 
+    def gain_energy(self):
+        pass
+    
+    def loose_energy(self):
+        pass
 
 grid = [[  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ],
         [  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ,  0  ],
@@ -125,7 +135,7 @@ fish_list.append(Fish((5,2)))
 fish_list.append(Fish((6,0)))
 
 #boucle des chrons
-for tour in range(10):
+for tour in range(15):
             
     for i in grid:
         print(i)
