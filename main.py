@@ -1,12 +1,13 @@
 import random
 class SeaAnimal:
 
-    def __init__(self,position):
+    def __init__(self,position,animal):
         self.x, self.y = position
+        self.animal = animal
 
 class Fish(SeaAnimal):
     def __init__(self, position):
-        super().__init__(position)
+        super().__init__(position,'fish')
 
     def fish_move (self, grid):
     
@@ -22,53 +23,58 @@ class Fish(SeaAnimal):
             new_x -= 1
         elif direction == 'east':
             new_x += 1
-
-        if grid[new_x][new_y] == 0:
+        #limite les déplacement des nvls coordonnée au sein de la grille
+        if 0 <= new_x < len(grid) and 0 <= new_y <= len(grid[0]) and grid[new_x][new_y] == 0:
             grid[self.x][self.y] = 0
             self.x, self.y = new_x, new_y
 
         
-        grid[self.x][self.y] = 'F'
+        grid[self.x][self.y] = 'fish'
 
         print(self.x,self.y)
 
 class Shark(SeaAnimal):
 
-    def __init__(self, position):
-        super().__init__(position)
+    def __init__(self, position,):
+        super().__init__(position, "shark")
 
-    def shark_move(self,grid):
+    def shark_move(self, grid):
         new_x, new_y = self.x, self.y
         direction = random.choice(['north', 'south', 'east', 'west'])
 
-         
-        if grid[self.x + 1][self.y] == 'F':
-            new_x = self.x + 1
-        elif grid[self.x - 1][self.y] == 'F':
-            new_x = self.x - 1
-        elif grid[self.x][self.y + 1] == 'F':
-            new_y = self.y + 1
-        elif grid[self.x][self.y - 1] == 'F':
-            new_y = self.y - 1
+        
+        if direction == 'north':
+            new_y += 1
+        elif direction == 'south':
+            new_y -= 1
+        elif direction == 'west':
+            new_x -= 1
+        elif direction == 'east':
+            new_x += 1
 
-        else:
-            if direction == 'north':
-                new_y += 1
-            elif direction == 'south':
-                    new_y -= 1
-            elif direction == 'west':
-                new_x -= 1
-            elif direction == 'east':
-                new_x += 1
-
-        grid[self.x][self.y] = 0  
-        if grid[new_x][new_y] == 'F':
-            grid[new_x][new_y] = 'S'
-        else:
-            
-            grid[new_x][new_y] = 'S'
+        # limite horizontale et verticale de ma grille pour mes nouvelles coordonnées et vérifie si case poisson adjacente
+        if 0 <= new_x < len(grid) and 0 <= new_y <= len(grid[0]) and grid[new_x][new_y] == 'fish':
+        
+            # for i in range(len(fish_list)):
+            #     if fish_list[i] == new_x and fish_list[i] == new_y:
+            #         fish_list.pop(i)
+            #     break
+           
+            #position initiale:
+            grid[self.x][self.y] = 0
+            #nouvelle position + "fish" devient "shark"
+            grid[new_x][new_y] = 'shark' 
+            #MAJ coordonées
             self.x, self.y = new_x, new_y
-            print(self.x, self.y)
+
+            
+        else:
+            #si pas de poisson:
+            grid[self.x][self.y] = 0
+            grid[new_x][new_y] = 'shark'
+
+        print(self.x, self.y)
+
 
 
 grid = [[0,0,0,0,0,0,0,0,0,0,0],
